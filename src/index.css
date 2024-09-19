@@ -6,11 +6,19 @@ body {
 }  
 
 .header {  
+  display: flex;
+  flex-direction: column;
   background-color: #282c34;  
   padding: 20px;  
   color: white;  
   text-align: center;  
 }  
+
+header h3{
+  position: relative;
+  left: 350px;
+  top: 30px;
+}
 
 .add-workout-form {  
   display: flex;  
