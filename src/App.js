@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './components/Header';  
 import WorkoutList from './components/WorkoutList';  
 import AddWorkout from './components/AddWorkout';  
+import ScrollToTopButton from './components/ScrollToTopButton'; 
 
 function App() {  
   const [workouts, setWorkouts] = useState(() => {  
@@ -28,6 +29,7 @@ function App() {
       <Header />  
       <AddWorkout onAdd={addWorkout} />  
       <WorkoutList workouts={workouts} onRemove={removeWorkout} />  
+      <ScrollToTopButton />
     </div>  
   );  
 }  
