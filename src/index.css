@@ -6,19 +6,29 @@ body {
 }  
 
 .header {  
-  display: flex;
-  flex-direction: column;
+  position: relative;   
+  display: flex;  
+  flex-direction: column;  
   background-color: #282c34;  
   padding: 20px;  
   color: white;  
+  min-height: 150px; /* Достаточная высота для содержимого */  
   text-align: center;  
-}  
-
-header h3{
-  position: relative;
-  left: 350px;
-  top: 30px;
 }
+
+header h1 {  
+  margin: 0 auto; /* Оставляем h1 по центру */  
+} 
+
+header h3 {  
+  position: absolute;  
+  bottom: 10px; /* Расположение внизу контейнера */  
+  right: 10px; /* Расположение справа */  
+  margin: 0;  
+  text-align: right;  
+  white-space: nowrap; /* Предотвращает перенос строки */  
+  font-size: 1rem; /* Стандартный размер шрифта */  
+} 
 
 .add-workout-form {  
   display: flex;  
@@ -69,4 +79,19 @@ header h3{
   .add-button {  
     width: 90%;  
   }  
+
+  header h3 {  
+    font-size: 0.85rem; /* Уменьшаем размер шрифта на мобильных устройствах */  
+  }
 }
+
+@media (max-width: 600px) {  
+  header h3 {  
+    position: absolute;  
+    bottom: 10px; /* Расположение внизу */  
+    right: 10px; /* Расположение справа */  
+    margin: 0;  
+    text-align: right;  
+    white-space: nowrap; /* Предотвращает перенос строки */  
+  }  
+}  
