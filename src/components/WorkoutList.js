@@ -1,16 +1,25 @@
 import React from 'react';  
-import WorkoutItem from './WorkoutItem';  
+import WorkoutGroup from './WorkoutGroup';  
 
 const WorkoutList = ({ workouts, onRemove }) => {  
+  const workoutsByDate = workouts.reduce((groups, workout) => {  
+    if (!groups[workout.date]) {  
+      groups[workout.date] = [];  
+    }  
+    groups[workout.date].push(workout);  
+    return groups;  
+  }, {});  
+
   return (  
     <div className="workout-list">  
-      {workouts.length === 0 ? (  
-        <p>Нет добавленных тренировок</p>  
-      ) : (  
-        workouts.map((workout, index) => (  
-          <WorkoutItem key={index} workout={workout} onRemove={()=> onRemove(index)} />  
-        ))  
-      )}  
+      {Object.entries(workoutsByDate).map(([date, workouts]) => (  
+        <WorkoutGroup  
+          key={date}  
+          date={date}  
+          workouts={workouts}  
+          onRemoveWorkout={onRemove}  
+        />  
+      ))}  
     </div>  
   );  
 };  
