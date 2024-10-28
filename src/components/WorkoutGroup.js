@@ -16,11 +16,11 @@ const WorkoutGroup = ({ date, workouts, onRemoveWorkout }) => {
       </div>  
       {!isCollapsed && (  
         <div>  
-          {workouts.map((workout, index) => (  
+          {workouts.map((workout) => (  
             <WorkoutItem  
-              key={index}  
+              key={workout.id}  
               workout={workout}  
-              onRemove={() => onRemoveWorkout(index)}  
+              onRemove={() => onRemoveWorkout(workout.id)}  
             />  
           ))}  
         </div>  

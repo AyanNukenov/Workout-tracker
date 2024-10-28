@@ -7,33 +7,30 @@ import ScrollToTopButton from './components/ScrollToTopButton';
 
 function App() {  
   const [workouts, setWorkouts] = useState(() => {  
-    // Инициализация состояния из localStorage  
     const savedWorkouts = localStorage.getItem('workouts');  
     return savedWorkouts ? JSON.parse(savedWorkouts) : [];  
   });  
 
   useEffect(() => {  
-    // Сохранение данных в localStorage при изменении списка тренировок  
     localStorage.setItem('workouts', JSON.stringify(workouts));  
   }, [workouts]);  
 
   const addWorkout = (workout) => {  
-    setWorkouts([...workouts, workout]);  
+    setWorkouts([...workouts, { ...workout, id: Date.now() }]);  
   };  
 
-  const removeWorkout = (indexToRemove) => {  
-    setWorkouts(workouts.filter((_, index) => index !== indexToRemove));  
-  };
+  const removeWorkout = (workoutId) => {  
+    setWorkouts(workouts.filter(workout => workout.id !== workoutId));  
+  };  
 
   return (  
     <div className="App">  
       <Header />  
       <AddWorkout onAdd={addWorkout} />  
       <WorkoutList workouts={workouts} onRemove={removeWorkout} />  
-      <ScrollToTopButton />
-      
+      <ScrollToTopButton />  
     </div>  
   );  
 }  
 
-export default App;
+export default App;  
