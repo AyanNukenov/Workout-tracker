@@ -1,18 +1,23 @@
-import React, { useState } from 'react';  
-import ConfirmationModal from './ConfirmationModal';  
+import React, { useState } from "react";  
 
-const WorkoutItem = ({ workout, onRemove }) => {  
+// Предполагается, что ConfirmationModal - это компонент, который вы используете для подтверждения  
+import ConfirmationModal from "./ConfirmationModal";  
+
+function WorkoutItem({ workout, onRemove }) {  
   const [isModalOpen, setIsModalOpen] = useState(false);  
 
+  // Открытие модального окна для подтверждения удаления  
   const handleRemoveClick = () => {  
     setIsModalOpen(true);  
   };  
 
+  // Подтверждение удаления и вызов функции onRemove  
   const handleConfirmRemove = () => {  
-    onRemove();  
-    setIsModalOpen(false);  
+    onRemove(); // Вызов функции удаления, переданной из родительского компонента  
+    setIsModalOpen(false); // Закрытие модального окна  
   };  
 
+  // Закрытие модального окна без удаления  
   const handleCloseModal = () => {  
     setIsModalOpen(false);  
   };  
@@ -35,6 +40,6 @@ const WorkoutItem = ({ workout, onRemove }) => {
       />  
     </div>  
   );  
-};  
+}  
 
 export default WorkoutItem;
