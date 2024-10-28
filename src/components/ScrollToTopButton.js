@@ -5,7 +5,7 @@ const ScrollToTopButton = () => {
 
   // Показать кнопку при прокрутке вниз  
   const toggleVisibility = () => {  
-    if (window.pageYOffset > 100) {  
+    if (window.pageYOffset > 150) {  
       setIsVisible(true);  
     } else {  
       setIsVisible(false);  
@@ -31,7 +31,7 @@ const ScrollToTopButton = () => {
     <button  
       type="button"  
       onClick={scrollToTop}  
-      className={`fixed bottom-7 right-8 bg-blue-500 text-white p-3 rounded-full shadow-lg transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}  
+      className={`fixed bottom-7 right-10 bg-blue-500 text-white p-3 rounded-full shadow-lg transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}  
     >  
       ↑  
     </button>  

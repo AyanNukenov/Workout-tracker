@@ -4,6 +4,7 @@ import WorkoutList from './components/WorkoutList';
 import AddWorkout from './components/AddWorkout';  
 import ScrollToTopButton from './components/ScrollToTopButton'; 
 
+
 function App() {  
   const [workouts, setWorkouts] = useState(() => {  
     // Инициализация состояния из localStorage  
@@ -30,6 +31,7 @@ function App() {
       <AddWorkout onAdd={addWorkout} />  
       <WorkoutList workouts={workouts} onRemove={removeWorkout} />  
       <ScrollToTopButton />
+      
     </div>  
   );  
 }  

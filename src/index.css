@@ -51,16 +51,16 @@ header h3 {
   border-radius: 5px;  
 }  
 
-.add-button {  
+.add-button, .end-button {  
   padding: 10px 20px;  
   background-color: #61dafb;  
   border: none;  
   border-radius: 5px;  
   cursor: pointer;  
   margin-top: 10px;  
-}  
+  }  
 
-.add-button:hover {  
+.add-button:hover, .end-button:hover {  
   background-color: #21a1f1;  
 }  
 
@@ -81,7 +81,7 @@ header h3 {
     width: 90%;  
   }  
 
-  .add-button {  
+  .add-button, .end-button {  
     width: 90%;  
   }  
 
