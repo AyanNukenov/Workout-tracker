@@ -28,7 +28,7 @@ function WorkoutItem({ workout, onRemove }) {
       <p>{`Повторения: ${workout.reps}, сеты: ${workout.sets}, вес: ${workout.weight} кг`}</p>  
       <p>{`Дата: ${workout.date}`}</p>  
       <button  
-        className="add-button"  
+        className="delete-button"  
         onClick={handleRemoveClick}  
       >  
         Удалить  

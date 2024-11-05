@@ -64,6 +64,20 @@ header h3 {
   background-color: #21a1f1;  
 }  
 
+.delete-button { 
+  padding: 10px 20px;  
+  background-color: rgb(251, 3, 3);  
+  border: none;  
+  border-radius: 5px;  
+  cursor: pointer;  
+  margin-top: 10px;
+  color: white;  
+}
+
+.delete-button:hover {
+  background-color: rgb(203, 38, 38);
+}
+
 .workout-list {  
   margin: 20px;  
   padding: 10px;  

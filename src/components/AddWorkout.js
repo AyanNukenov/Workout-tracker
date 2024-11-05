@@ -1,4 +1,5 @@
 import React, { useState } from 'react';  
+import ExerciseInput from './ExerciseInput';
 
 const AddWorkout = ({ onAdd }) => {  
   const [exercise, setExercise] = useState("");  
@@ -27,13 +28,7 @@ const AddWorkout = ({ onAdd }) => {
   return (  
     <div className="add-workout-container">  
       <form onSubmit={handleSubmit} className="add-workout-form flex flex-col space-y-4">  
-        <input  
-          type="text"  
-          placeholder="Упражнение"  
-          value={exercise}  
-          onChange={(e) => setExercise(e.target.value)}  
-          className="input border p-2 rounded"  
-        />  
+        <ExerciseInput exercise={exercise} setExercise={setExercise}/> 
         <input  
           type="text"  
           placeholder="Количество повторений"  
