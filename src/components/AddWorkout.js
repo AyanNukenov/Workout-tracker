@@ -1,7 +1,7 @@
 import React, { useState } from 'react';  
-import ExerciseInput from './ExerciseInput';
+import ExerciseInput from './ExerciseInput';  
 
-const AddWorkout = ({ onAdd }) => {  
+const AddWorkout = ({ onAdd, currentUser, onBack }) => {  
   const [exercise, setExercise] = useState("");  
   const [reps, setReps] = useState("");  
   const [sets, setSets] = useState("");  
@@ -27,8 +27,20 @@ const AddWorkout = ({ onAdd }) => {
 
   return (  
     <div className="add-workout-container">  
+      <h2  style={{   
+        textAlign: 'center',   
+        fontWeight: 'bold',   
+        fontSize: '24px',   
+        marginTop: '20px',
+        fontFamily: 'Arial, sans-serif'   
+      }}  > 
+      Спортсмен/клиент: {currentUser}</h2> {/* Отображаем имя пользователя */}  
       <form onSubmit={handleSubmit} className="add-workout-form flex flex-col space-y-4">  
-        <ExerciseInput exercise={exercise} setExercise={setExercise}/> 
+      <button onClick={onBack} className="back-button bg-blue-500 text-white p-2 rounded" 
+       >  
+        Выбрать другого спортсмена/клиента
+      </button> 
+        <ExerciseInput exercise={exercise} setExercise={setExercise}/>   
         <input  
           type="text"  
           placeholder="Количество повторений"  
