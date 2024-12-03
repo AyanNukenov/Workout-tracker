@@ -63,6 +63,7 @@ header h3 {
   max-width: 300px;  
   border: 1px solid #ccc;  
   border-radius: 5px;  
+  box-sizing: border-box; /* Учитываем padding в ширине */
 }  
 
 .add-button, .end-button, .back-button, .stat-button, .add-recharts, .trainig-btn {  
@@ -116,6 +117,25 @@ header h3 {
   background-color: #f9f9f9; /* Светлый фон */  
   border-radius: 10px; /* Скругленные углы */  
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Лёгкая тень */  
+  width: 100%; /* Занимает всю ширину экрана */  
+  max-width: 800px; /* Ограничение максимальной ширины */  
+  box-sizing: border-box; /* Учитывать padding в ширине */
+}  
+
+.time-period-buttons {  
+  display: flex;  
+  flex-wrap: wrap; /* Кнопки будут переноситься на следующую строку */  
+  justify-content: center; /* Центрирование кнопок */  
+  gap: 10px; /* Пространство между кнопками */  
+  width: 100%; /* Занимает всю ширину контейнера */  
+}  
+
+.time-period-buttons {  
+  display: flex;  
+  flex-wrap: wrap; /* Кнопки будут переноситься на следующую строку */  
+  justify-content: center; /* Центрирование кнопок */  
+  gap: 10px; /* Пространство между кнопками */  
+  width: 100%; /* Занимает всю ширину контейнера */  
 }  
 
 .chart-container {  
@@ -136,7 +156,13 @@ header h3 {
   padding: 5px;  
 }  
 
-@media (max-width: 600px) {  
+ul {  
+  list-style: none;  
+  padding: 0;  
+  margin: 0;  
+} 
+
+@media (max-width: 768px) {  
   .input {  
     width: 90%;  
   }  
@@ -160,7 +186,7 @@ header h3 {
   }  
 }
 
-@media (max-width: 600px) {  
+@media (max-width: 768px) {  
   header h3 {  
     position: absolute;  
     bottom: 10px; /* Расположение внизу */  

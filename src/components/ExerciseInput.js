@@ -1,4 +1,4 @@
-import React, { useState } from "react";  
+import React, { useState, useRef, useEffect } from "react";  
 
 const exerciseList = [  
   "Армейский жим",  
@@ -67,6 +67,7 @@ const exerciseList = [
 export default function ExerciseInput({ exercise, setExercise }) {  
   const [suggestions, setSuggestions] = useState([]);  
   const [isSuggestionSelected, setIsSuggestionSelected] = useState(false); // Флаг для отслеживания выбора из списка  
+  const inputRef = useRef(null); // Для отслеживания кликов вне компонента 
 
   const handleChange = (e) => {  
     const value = e.target.value;  
@@ -89,6 +90,21 @@ export default function ExerciseInput({ exercise, setExercise }) {
     setIsSuggestionSelected(true); // Устанавливаем флаг выбора  
   };  
 
+  // Закрытие списка при клике вне компонента  
+  const handleClickOutside = (e) => {  
+    if (inputRef.current && !inputRef.current.contains(e.target)) {  
+      setSuggestions([]); // Закрываем список  
+    }  
+  };
+
+  // Добавляем и удаляем обработчик кликов вне компонента  
+  useEffect(() => {  
+    document.addEventListener("mousedown", handleClickOutside);  
+    return () => {  
+      document.removeEventListener("mousedown", handleClickOutside);  
+    };  
+  }, []);
+
   const handleBlur = () => {  
     // Если пользователь ввел текст, но не выбрал из списка  
     if (!isSuggestionSelected && exercise.trim() === "") {  
@@ -98,7 +114,7 @@ export default function ExerciseInput({ exercise, setExercise }) {
   };  
 
   return (  
-    <div className="relative w-full max-w-xs mx-auto">  
+    <div className="relative w-full max-w-xs mx-auto" ref={inputRef} >  
       <input  
         type="text"  
         placeholder="Упражнение"  
