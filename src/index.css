@@ -140,13 +140,15 @@ header h3 {
 
 .chart-container {  
   width: 100%; /* Занимает всю ширину экрана */  
-  max-width: 100%; /* Ограничение ширины для мобильных */  
+  max-width: 800px; /* Ограничение ширины для мобильных */  
   background-color: #ffffff; /* Белый фон */  
   border: 2px solid blue; /* Голубая рамка */  
   border-radius: 10px; /* Скругленные углы */  
   padding: 10px; /* Уменьшенный отступ */  
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Лёгкая тень */  
   margin-top: 10px; /* Отступ сверху */  
+  height: 300px; /* Фиксированная высота */  
+  overflow: hidden; /* Предотвращает выход элементов за пределы */  
 }  
 
 .chart-container .recharts-tooltip-wrapper {  

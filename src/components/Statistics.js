@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";  
 import ExerciseInput from "./ExerciseInput";  
 import { format, subMonths, isWithinInterval, parseISO } from "date-fns";  
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"; // Импорт библиотеки 
 
 const Statistics = ({ workouts, onBack }) => {  
   const [selectedExercise, setSelectedExercise] = useState("");  
@@ -35,7 +36,7 @@ const Statistics = ({ workouts, onBack }) => {
             
       );  
 
-      console.log("Произвольный период:", { startDate, endDate });  
+      
       setFilteredWorkouts(filtered);  
       return;  
     }  
@@ -71,7 +72,7 @@ const Statistics = ({ workouts, onBack }) => {
   // Обработка выбора упражнения  
   const handleExerciseSelect = (exercise) => {  
     console.log("Выбранное упражнение:", selectedExercise);  
-console.log("Список упражнений в тренировках:", workouts.map(workout => workout.exercise));
+    console.log("Список упражнений в тренировках:", workouts.map(workout => workout.exercise));
     setSelectedExercise(exercise);  
   };  
 
@@ -95,13 +96,22 @@ console.log("Список упражнений в тренировках:", work
         }  
     }  
 
+    // Создаем отчет с названием упражнения  
+    // const report = {  
+    // name: selectedExercise, // Название отчета = название упражнения  
+    // data: filteredWorkouts, // Данные для отчета  
+    // };  
+
+    // Сохраняем отчет (например, в локальном состоянии или локальном хранилище)  
+    // saveReport(report);
+
     filterWorkoutsByPeriod(selectedExercise, timePeriod);  
   };  
 
   // Данные для диаграммы  
   const chartData = filteredWorkouts.map((workout) => ({  
     date: format(parseISO(workout.date), "dd.MM.yyyy"),  
-    weight: workout.weight,  
+    вес: workout.weight,  
   }));  
 
   console.log("Данные для диаграммы:", chartData);  
@@ -189,16 +199,35 @@ console.log("Список упражнений в тренировках:", work
       {filteredWorkouts.length === 0 ? (  
         <p className="mt-4 text-gray-500">Нет данных для отображения статистики.</p>  
       ) : (  
-        <div className="chart-container mt-4">  
-          <ResponsiveContainer width="100%" height={300}>  
-            <LineChart data={chartData}>  
-              <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0"/>  
-              <XAxis dataKey="date" stroke="#61dafb"/>  
-              <YAxis stroke="#61dafb"/>  
-              <Tooltip />  
-              <Line type="monotone" dataKey="weight" stroke="#8884d8" />  
-            </LineChart>  
-          </ResponsiveContainer>  
+        <div className="chart-container mt-4" style={{  
+          width: "100%",  
+          height: "400px",  
+          overflow: "hidden", 
+          position: "relative",  
+        }}  >  
+        <TransformWrapper  
+            initialScale={1}   
+            minScale={0.5}  
+            maxScale={3}  
+            centerOnInit={true}  
+            > 
+            {({ zoomIn, zoomOut, resetTransform, ...rest }) => (   
+               <TransformComponent>  
+                <div style={{ width: "420px", height: "100%" }}>  
+                  <h2 className="text-lg font-bold mb-2 text-center">{selectedExercise}</h2>  
+                  <ResponsiveContainer width="100%" height={350}>  
+                    <LineChart data={chartData}>  
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0"/>  
+                    <XAxis dataKey="date" stroke="#61dafb"/>  
+                    <YAxis stroke="#61dafb" domain={[0, 'dataMax + 10']} />   
+                    <Tooltip />  
+                    <Line type="monotone" dataKey="вес" stroke="#8884d8" />  
+                    </LineChart>  
+                  </ResponsiveContainer>  
+                </div> 
+               </TransformComponent>   
+            )}   
+           </TransformWrapper>   
         </div>  
       )}  
     </div>  
