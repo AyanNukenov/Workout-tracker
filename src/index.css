@@ -65,7 +65,7 @@ header h3 {
   border-radius: 5px;  
 }  
 
-.add-button, .end-button, .back-button {  
+.add-button, .end-button, .back-button, .stat-button, .add-recharts, .trainig-btn {  
   padding: 10px 20px;  
   background-color: #61dafb;  
   border: none;  
@@ -74,7 +74,9 @@ header h3 {
   margin-top: 10px;  
   }  
 
-.add-button:hover, .end-button:hover, .back-button:hover {  
+.add-button:hover, .end-button:hover, .back-button:hover, .stat-button:hover,
+.add-recharts:hover, .trainig-btn:hover
+ {  
   background-color: #21a1f1;  
 }  
 
@@ -104,18 +106,58 @@ header h3 {
   margin-bottom: 10px;  
 }  
 
+.statistics-container {  
+  display: flex;  
+  flex-direction: column;  
+  align-items: center;  
+  gap: 20px;  
+  margin: 10px; /* Уменьшенный отступ для мобильных */  
+  padding: 15px; /* Уменьшенный внутренний отступ */  
+  background-color: #f9f9f9; /* Светлый фон */  
+  border-radius: 10px; /* Скругленные углы */  
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Лёгкая тень */  
+}  
+
+.chart-container {  
+  width: 100%; /* Занимает всю ширину экрана */  
+  max-width: 100%; /* Ограничение ширины для мобильных */  
+  background-color: #ffffff; /* Белый фон */  
+  border: 2px solid blue; /* Голубая рамка */  
+  border-radius: 10px; /* Скругленные углы */  
+  padding: 10px; /* Уменьшенный отступ */  
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Лёгкая тень */  
+  margin-top: 10px; /* Отступ сверху */  
+}  
+
+.chart-container .recharts-tooltip-wrapper {  
+  background-color: #61dafb; /* Голубой фон тултипа */  
+  color: #ffffff; /* Белый текст тултипа */  
+  border-radius: 5px; /* Скруглённые углы тултипа */  
+  padding: 5px;  
+}  
+
 @media (max-width: 600px) {  
   .input {  
     width: 90%;  
   }  
 
-  .add-button, .end-button, .back-button {  
-    width: 90%;  
+  .add-button, .end-button, .back-button, .stat-button {  
+    width: 70%;  
   }  
 
   header h3 {  
     font-size: 0.85rem; /* Уменьшаем размер шрифта на мобильных устройствах */  
   }
+
+  .statistics-container {  
+    margin: 5px; /* Ещё меньше отступы для маленьких экранов */  
+    padding: 10px; /* Уменьшенный внутренний отступ */  
+  }  
+
+  .chart-container {  
+    padding: 5px; /* Уменьшенный отступ для диаграммы */  
+    margin-top: 5px; /* Меньший отступ сверху */  
+  }  
 }
 
 @media (max-width: 600px) {  

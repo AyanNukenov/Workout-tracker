@@ -1,16 +1,18 @@
 import React, { useState } from 'react';  
 import ExerciseInput from './ExerciseInput';  
+import { format } from "date-fns";  
 
-const AddWorkout = ({ onAdd, currentUser, onBack }) => {  
+const AddWorkout = ({ onAdd, currentUser, onBack, setShowStatistics }) => {  
   const [exercise, setExercise] = useState("");  
   const [reps, setReps] = useState("");  
   const [sets, setSets] = useState("");  
   const [weight, setWeight] = useState("");  
+  
 
   const handleSubmit = (e) => {  
     e.preventDefault();  
     if (!exercise || !reps || !sets || !weight) return;  
-    const date = new Date().toLocaleDateString();  
+    const date = format(new Date(), "yyyy-MM-dd"); // Сохраняем дату в ISO-формате  
     onAdd({ exercise, reps, sets, weight, date });  
     setExercise("");  
     setReps("");  
@@ -39,6 +41,12 @@ const AddWorkout = ({ onAdd, currentUser, onBack }) => {
       <button onClick={onBack} className="back-button bg-blue-500 text-white p-2 rounded" 
        >  
         Выбрать другого спортсмена/клиента
+      </button> 
+      <button  
+        className="stat-button bg-blue-500 text-white p-2 rounded"  
+        onClick={() => setShowStatistics(true)}  
+      >  
+        Статистика спортсмена/клиента  
       </button> 
         <ExerciseInput exercise={exercise} setExercise={setExercise}/>   
         <input  

@@ -4,9 +4,12 @@ import WorkoutList from './components/WorkoutList';
 import AddWorkout from './components/AddWorkout';  
 import ScrollToTopButton from './components/ScrollToTopButton';  
 import AuthForm from './components/AuthForm';  
+import Statistics from './components/Statistics'; 
 
 function App() {  
   const [workouts, setWorkouts] = useState([]);  
+
+  const [showStatistics, setShowStatistics] = useState(false); 
 
   const [currentUser, setCurrentUser] = useState(() => {  
     return localStorage.getItem('currentUser') || '';  
@@ -57,11 +60,22 @@ function App() {
         <AuthForm onCreate={handleCreateUser} onSelect={handleSelectUser} />  
       ) : (  
         <>  
-          <AddWorkout onAdd={addWorkout} currentUser={currentUser} onBack={handleBack}/>  
+          {showStatistics ? (  
+            // Компонент Статистика  
+            <Statistics  
+              workouts={workouts} // Передаем список тренировок  
+              onBack={() => setShowStatistics(false)} // Возврат к тренировкам  
+            />  
+          ) : ( 
+        
+        <>  
+          <AddWorkout onAdd={addWorkout} currentUser={currentUser} onBack={handleBack} setShowStatistics={setShowStatistics}/>  
           <WorkoutList workouts={workouts} onRemove={removeWorkout}/>  
           <ScrollToTopButton />  
         </>  
       )}  
+      </> 
+      )}
     </div>  
   );  
 }  
