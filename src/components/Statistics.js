@@ -118,13 +118,7 @@ const Statistics = ({ workouts, onBack }) => {
 
   return (  
     <div className="statistics-container p-4">  
-      {/* Кнопка возврата */}  
-      <button  
-        className="trainig-btn bg-blue-500 text-white px-4 py-2 rounded mb-4"  
-        onClick={onBack}  
-      >  
-        Журнал тренировок  
-      </button>  
+      
 
       {/* Выбор упражнения */}  
       <ExerciseInput exercise={selectedExercise} setExercise={handleExerciseSelect} />  

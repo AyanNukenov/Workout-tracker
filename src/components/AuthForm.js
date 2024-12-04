@@ -1,106 +1,135 @@
-import React, { useState, useEffect } from 'react';  
+import React, { useState } from 'react';  
 
-const AuthForm = ({ onCreate, onSelect }) => {  
+const AuthForm = ({ onLogin }) => {  
   const [username, setUsername] = useState('');  
-  const [allUsernames, setAllUsernames] = useState([]);  
-  const [suggestions, setSuggestions] = useState([]);  
+  const [password, setPassword] = useState('');  
+  const [isRegistering, setIsRegistering] = useState(false);  
+  const [errorMessage, setErrorMessage] = useState('');  
+  const [showPassword, setShowPassword] = useState(false);  
 
-  useEffect(() => {  
-    const savedUsernames = JSON.parse(localStorage.getItem('usernames')) || [];  
-    setAllUsernames(savedUsernames);  
-  }, []);  
-
-  const handleInputChange = (e) => {  
-    const value = e.target.value;  
-    setUsername(value);  
-
-    if (value) {  
-      const filteredSuggestions = allUsernames.filter(name =>  
-        name.toLowerCase().includes(value.toLowerCase())  
-      );  
-      setSuggestions(filteredSuggestions);  
-    } else {  
-      setSuggestions([]);  
-    }  
-  };  
-
-  const handleCreate = () => {  
-    if (username.trim()) {  
-      if (!allUsernames.includes(username)) {  
-        const updatedUsernames = [...allUsernames, username];  
-        setAllUsernames(updatedUsernames);  
-        localStorage.setItem('usernames', JSON.stringify(updatedUsernames));  
+  const handleLogin = () => {  
+    if (username.trim() && password.trim()) {  
+      // Проверяем, существует ли логин  
+      const savedPassword = localStorage.getItem(`password_${username}`);  
+      if (savedPassword) {  
+        if (savedPassword === password) {  
+          // Переход к приложению после успешного входа  
+          onLogin(username, password);  
+        } else {  
+          setErrorMessage('Неверный пароль.');  
+        }  
+      } else {  
+        setErrorMessage('Пользователь с таким логином не найден. Зарегистрируйтесь.');  
       }  
-      onCreate(username);  
-      setUsername('');  
-      setSuggestions([]);  
+    } else {  
+      setErrorMessage('Введите логин и пароль.');  
     }  
-  };  
+  }; 
 
-  const handleSelect = (name) => {  
-    onSelect(name);  
-    setUsername('');  
-    setSuggestions([]);  
+  const handleRegister = () => {  
+    if (username.trim() && password.trim()) {  
+      // Проверяем, существует ли уже логин  
+      const savedPassword = localStorage.getItem(`password_${username}`);  
+      if (savedPassword) {  
+        setErrorMessage('Этот логин уже используется. Выберите другой.');  
+      } else {  
+        // Сохраняем логин и пароль  
+        localStorage.setItem(`password_${username}`, password);  
+        // Переход к приложению после успешной регистрации  
+        onLogin(username, password);  
+      }  
+    } else {  
+      setErrorMessage('Введите логин и пароль.');  
+    }  
+  };
+
+  const handleSwitchMode = () => {  
+    setIsRegistering((prev) => !prev);  
+    setErrorMessage('');  
   };  
 
   return (  
-    <div className="auth-form" style={{ position: 'relative' }}>  
-      <h2 style={{  
-        textAlign: 'center',  
-        fontWeight: 'bold',  
-        fontSize: '24px',  
-        marginTop: '20px',  
-        fontFamily: 'Arial, sans-serif'  
-      }}>  
-        Для продолжения <br /> введите имя или ник  
-      </h2>  
-      <input  
-        type="text"  
-        placeholder="Имя или ник (можете выдумать)"  
-        value={username}  
-        onChange={handleInputChange}  
-        className="input border p-2 rounded"  
-        style={{ width: '100%' }}  
-      />  
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>  
-    <button onClick={handleCreate} className="text-white p-2 rounded"  
-      style={{ backgroundColor: '#61dafb', marginRight: '10px' }}>  
-      Создать  
-    </button>  
-    <button onClick={() => handleSelect(username)} className="text-white p-2 rounded"  
-      style={{ backgroundColor: '#61dafb' }}>  
-      Выбрать  
-    </button>  
-  </div>   
-      {suggestions.length > 0 && (  
-        <ul className="suggestions-list" style={{  
-          position: 'absolute',  
-          top: '100%',  
-          left: '0',  
-          right: '0',  
-          backgroundColor: 'white',  
-          border: '1px solid #ccc',  
-          borderRadius: '4px',  
-          zIndex: '1000',  
-          listStyleType: 'none',  
-          padding: '0',  
-          margin: '5px 0 0 0',  
-          maxHeight: '150px',  
-          overflowY: 'auto'  
-        }}>  
-          {suggestions.map((suggestion, index) => (  
-            <li key={index} onClick={() => handleSelect(suggestion)} className="suggestion-item" style={{  
+    <div className="auth-form" style={{ maxWidth: '400px', margin: '0 auto', textAlign: 'center' }}>  
+      <h2 style={{ color: 'black',  fontSize: '26px',  marginTop: '30px' }}>{isRegistering ? 'Регистрация' : 'Вход'}</h2>  
+      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}  
+      <div style={{ marginBottom: '10px' }}>  
+        <input  
+          type="text"  
+          placeholder="Логин"  
+          value={username}  
+          onChange={(e) => setUsername(e.target.value)}  
+          style={{  
+            width: '100%',  
+            padding: '10px',  
+            marginBottom: '10px',  
+            border: '1px solid #ccc',  
+            borderRadius: '4px',  
+          }}  
+        />  
+        <div style={{ position: 'relative' }}>  
+          <input  
+            type={showPassword ? 'text' : 'password'}  
+            placeholder="Пароль"  
+            value={password}  
+            onChange={(e) => setPassword(e.target.value)}  
+            style={{  
+              width: '100%',  
               padding: '10px',  
+              border: '1px solid #ccc',  
+              borderRadius: '4px',  
+            }}  
+          />  
+          <button  
+            onClick={() => setShowPassword((prev) => !prev)}  
+            style={{  
+              position: 'absolute',  
+              right: '10px',  
+              top: '50%',  
+              transform: 'translateY(-50%)',  
+              background: 'none',  
+              border: 'none',  
               cursor: 'pointer',  
-              borderBottom: '1px solid #eee'  
-            }}>  
-              {suggestion}  
-            </li>  
-          ))}  
-        </ul>  
-      )}  
+            }}  
+          >  
+            <img  
+              src={showPassword ? '/assets/eyeopen.png' : '/assets/eyeclose.png'}  
+              alt={showPassword ? 'Показать пароль' : 'Скрыть пароль'}  
+              style={{ width: '20px', height: '20px' }}  
+            />  
+          </button>  
+        </div>  
+      </div>  
+      <button  
+        onClick={isRegistering ? handleRegister : handleLogin}  
+        style={{  
+          width: '100%',  
+          padding: '10px',  
+          backgroundColor: '#61dafb',  
+          color: 'white',  
+          border: 'none',  
+          borderRadius: '4px',  
+          cursor: 'pointer',  
+          marginBottom: '10px',  
+        }}  
+      >  
+        {isRegistering ? 'Зарегистрироваться' : 'Войти'}  
+      </button>  
+      <button  
+        onClick={handleSwitchMode}  
+        style={{  
+          width: '100%',  
+          padding: '10px',  
+          backgroundColor: 'transparent',  
+          color: '#61dafb',  
+          border: '1px solid #61dafb',  
+          borderRadius: '4px',  
+          cursor: 'pointer',  
+        }}  
+      >  
+        {isRegistering ? 'Уже есть аккаунт? Войти' : 'Нет аккаунта? Зарегистрироваться'}  
+      </button>  
     </div>  
   );  
 };  
 
-export default AuthForm;
+export default AuthForm;  

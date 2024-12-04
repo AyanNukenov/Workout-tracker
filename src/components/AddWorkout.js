@@ -36,18 +36,9 @@ const AddWorkout = ({ onAdd, currentUser, onBack, setShowStatistics }) => {
         marginTop: '20px',
         fontFamily: 'Arial, sans-serif'   
       }}  > 
-      Спортсмен/клиент: {currentUser}</h2> {/* Отображаем имя пользователя */}  
+      Спортсмен: {currentUser}</h2> {/* Отображаем имя пользователя */}  
       <form onSubmit={handleSubmit} className="add-workout-form flex flex-col space-y-4">  
-      <button onClick={onBack} className="back-button bg-blue-500 text-white p-2 rounded" 
-       >  
-        Выбрать другого спортсмена/клиента
-      </button> 
-      <button  
-        className="stat-button bg-blue-500 text-white p-2 rounded"  
-        onClick={() => setShowStatistics(true)}  
-      >  
-        Статистика спортсмена/клиента  
-      </button> 
+      
         <ExerciseInput exercise={exercise} setExercise={setExercise}/>   
         <input  
           type="text"  

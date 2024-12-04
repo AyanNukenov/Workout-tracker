@@ -4,78 +4,80 @@ import WorkoutList from './components/WorkoutList';
 import AddWorkout from './components/AddWorkout';  
 import ScrollToTopButton from './components/ScrollToTopButton';  
 import AuthForm from './components/AuthForm';  
-import Statistics from './components/Statistics'; 
+import Statistics from './components/Statistics';  
+import NavigationBar from './components/NavigationBar'; // Новый компонент  
+import Account from './components/Account'; // Импортируем компонент Account  
 
 function App() {  
   const [workouts, setWorkouts] = useState([]);  
-
-  const [showStatistics, setShowStatistics] = useState(false); 
-
+  const [activePage, setActivePage] = useState('account'); // Текущая страница  
   const [currentUser, setCurrentUser] = useState(() => {  
     return localStorage.getItem('currentUser') || '';  
+  });  
+  const [currentPassword, setCurrentPassword] = useState(() => {  
+    return localStorage.getItem('currentPassword') || '';  
   });  
 
   // Загружаем тренировки для текущего пользователя при изменении currentUser  
   useEffect(() => {  
     if (currentUser) {  
-      const userWorkouts = localStorage.getItem(`workouts_${currentUser}`);  
+      const userWorkouts = localStorage.getItem(`workouts_${currentUser}_${currentPassword}`);  
       setWorkouts(userWorkouts ? JSON.parse(userWorkouts) : []);  
     }  
-  }, [currentUser]);  
+  }, [currentUser, currentPassword]);  
 
   const addWorkout = (workout) => {  
     const updatedWorkouts = [...workouts, { ...workout, id: Date.now() }];  
     setWorkouts(updatedWorkouts);  
-    localStorage.setItem(`workouts_${currentUser}`, JSON.stringify(updatedWorkouts));  
+    localStorage.setItem(`workouts_${currentUser}_${currentPassword}`, JSON.stringify(updatedWorkouts));  
   };  
 
   const removeWorkout = (id) => {  
-    const updatedWorkouts = workouts.filter(workout => workout.id !== id);  
+    const updatedWorkouts = workouts.filter((workout) => workout.id !== id);  
     setWorkouts(updatedWorkouts);  
-    localStorage.setItem(`workouts_${currentUser}`, JSON.stringify(updatedWorkouts));  
+    localStorage.setItem(`workouts_${currentUser}_${currentPassword}`, JSON.stringify(updatedWorkouts));  
   };  
 
-  const handleCreateUser = (username) => {  
+  const handleLogin = (username, password) => {  
     setCurrentUser(username);  
+    setCurrentPassword(password);  
     localStorage.setItem('currentUser', username);  
-    setWorkouts([]); // Начать с пустого списка тренировок  
-  };  
-
-  const handleSelectUser = (username) => {  
-    setCurrentUser(username);  
-    localStorage.setItem('currentUser', username);  
-    const userWorkouts = localStorage.getItem(`workouts_${username}`);  
+    localStorage.setItem('currentPassword', password);  
+    const userWorkouts = localStorage.getItem(`workouts_${username}_${password}`);  
     setWorkouts(userWorkouts ? JSON.parse(userWorkouts) : []);  
+    setActivePage('account'); // Устанавливаем текущую страницу на "Аккаунт"  
   };  
 
-  const handleBack = () => {  
+  const handleLogout = () => {  
     setCurrentUser('');  
+    setCurrentPassword('');  
     localStorage.removeItem('currentUser');  
+    localStorage.removeItem('currentPassword');  
+    setActivePage('auth'); // Возвращаемся на страницу авторизации  
   };  
 
   return (  
     <div className="App">  
       <Header />  
       {!currentUser ? (  
-        <AuthForm onCreate={handleCreateUser} onSelect={handleSelectUser} />  
+        <AuthForm onLogin={handleLogin} />  
       ) : (  
         <>  
-          {showStatistics ? (  
-            // Компонент Статистика  
-            <Statistics  
-              workouts={workouts} // Передаем список тренировок  
-              onBack={() => setShowStatistics(false)} // Возврат к тренировкам  
-            />  
-          ) : ( 
-        
-        <>  
-          <AddWorkout onAdd={addWorkout} currentUser={currentUser} onBack={handleBack} setShowStatistics={setShowStatistics}/>  
-          <WorkoutList workouts={workouts} onRemove={removeWorkout}/>  
-          <ScrollToTopButton />  
+          {/* Навигационная панель */}  
+          <NavigationBar activePage={activePage} setActivePage={setActivePage} onLogout={handleLogout} />  
+          <div className="p-4">  
+            {activePage === 'account' && <Account username={currentUser} workouts={workouts} />} {/* Используем компонент Account */}  
+            {activePage === 'addWorkout' && (  
+              <>  
+                <AddWorkout onAdd={addWorkout} currentUser={currentUser} />  
+                <WorkoutList workouts={workouts} onRemove={removeWorkout} />  
+                <ScrollToTopButton />  
+              </>  
+            )}  
+            {activePage === 'statistics' && <Statistics workouts={workouts} />}  
+          </div>  
         </>  
       )}  
-      </> 
-      )}
     </div>  
   );  
 }  
