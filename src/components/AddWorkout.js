@@ -37,7 +37,7 @@ const AddWorkout = ({ onAdd, currentUser, onBack, setShowStatistics }) => {
         fontFamily: 'Arial, sans-serif'   
       }}  > 
       Спортсмен: {currentUser}</h2> {/* Отображаем имя пользователя */}  
-      <form onSubmit={handleSubmit} className="add-workout-form flex flex-col space-y-4">  
+      <form onSubmit={handleSubmit} className="add-workout-form">  
       
         <ExerciseInput exercise={exercise} setExercise={setExercise}/>   
         <input  

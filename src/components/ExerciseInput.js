@@ -121,8 +121,8 @@ export default function ExerciseInput({ exercise, setExercise }) {
         value={exercise}  
         onChange={handleChange}  
         onBlur={handleBlur} // Проверяем ввод при потере фокуса  
-        className="input border p-2 rounded w-full"  
-        style={{ width: "400px" }}  
+        className="input border p-2 rounded"  
+         
       />  
       {suggestions.length > 0 && (  
         <ul  

@@ -22,7 +22,7 @@ const Account = ({ username }) => {
   return (  
     <div className="bg-gradient-to-b from-gray-100 to-gray-300 min-h-screen p-4 flex flex-col items-center">  
       {/* Приветствие */}  
-      <h1 className="text-2xl font-bold text-blue-600 mb-6 animate-fadeIn">  
+      <h1 className="text-2xl font-bold text-blue-500 mb-6 animate-fadeIn">  
         Добро пожаловать, {username}!  
       </h1>  
 
@@ -33,8 +33,8 @@ const Account = ({ username }) => {
           alt="Атлет"  
           className="w-24 h-24 mb-4"  
         />  
-        <p className="text-lg font-semibold">В общем Вы сделали:</p>  
-        <p className="text-2xl font-bold text-blue-600">{workoutCount} упражнения(-й)</p>  
+        <p className="text-lg font-semibold">За все время Вы сделали:</p>  
+        <p className="text-2xl font-bold text-blue-500">{workoutCount} упражнения(-й)</p>  
       </div>  
 
       {/* Блок с максимальным и минимальным весом */}  
@@ -46,8 +46,8 @@ const Account = ({ username }) => {
             alt="Штанга"  
             className="w-24 h-24 mb-4"  
           />  
-          <p className="text-lg font-semibold text-center">Ваш максимальный вес в упражнении:</p>  
-          <p className="text-2xl font-bold text-green-600">{highestWeight} кг</p>  
+          <p className="text-lg font-semibold text-center">Максимальный вес в упражнении:</p>  
+          <p className="text-2xl font-bold text-green-500">{highestWeight} кг</p>  
         </div>  
 
         {/* Минимальный вес */}  
@@ -57,8 +57,8 @@ const Account = ({ username }) => {
             alt="Худой человек"  
             className="w-24 h-24 mb-4"  
           />  
-          <p className="text-lg font-semibold text-center">Ваш минимальный вес в упражнении:</p>  
-          <p className="text-2xl font-bold text-red-600">{lowestWeight} кг</p>  
+          <p className="text-lg font-semibold text-center">Минимальный вес в упражнении:</p>  
+          <p className="text-2xl font-bold text-red-500">{lowestWeight} кг</p>  
         </div>  
       </div>  
 
@@ -74,7 +74,7 @@ const Account = ({ username }) => {
             Рекомендуем усилить акцент на эту группу мышц:  
           </p>  
           <p className="text-center text-red-500 font-bold mt-2 text-center">  
-            Ваш минимальный вес в упражнении: <br/> {lowestWeight} кг  
+            Минимальный вес в упражнении: <br/> {lowestWeight} кг  
           </p>  
         </div>  
       )}  

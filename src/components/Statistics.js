@@ -117,7 +117,7 @@ const Statistics = ({ workouts, onBack }) => {
   console.log("Данные для диаграммы:", chartData);  
 
   return (  
-    <div className="statistics-container p-4">  
+    <div className="statistics-container p-4 flex flex-col items-center gap-4">  
       
 
       {/* Выбор упражнения */}  
@@ -153,7 +153,7 @@ const Statistics = ({ workouts, onBack }) => {
           className={`px-4 py-2 rounded ${timePeriod === "custom" ? "bg-blue-500 text-white" : "bg-gray-200"}`}  
           onClick={() => handlePeriodChange("custom")}  
         >  
-          Произвольный период  
+          Задать период  
         </button>  
       </div>  
 

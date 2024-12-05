@@ -35,6 +35,17 @@ header h3 {
   font-size: 1rem; /* Стандартный размер шрифта */  
 } 
 
+.navigation-bar {  
+  transition: all 0.3s ease; /* Плавное появление/фиксация */
+  
+} 
+
+.navigation-bar.fixed {  
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Тень при фиксации */  
+  transform: translateY(0); /* Возвращаем в исходное положение */  
+  background-color: white;  
+}  
+
 .auth-form {
   display: flex;  
   gap: 20px;
@@ -57,9 +68,9 @@ header h3 {
 }  
 
 .input {  
-  margin: 5px;  
+  margin: 5px 0;  
   padding: 10px;  
-  width: 80%;  
+  width: 100%;  
   max-width: 300px;  
   border: 1px solid #ccc;  
   border-radius: 5px;  
@@ -114,9 +125,6 @@ header h3 {
   gap: 20px;  
   margin: 10px; /* Уменьшенный отступ для мобильных */  
   padding: 15px; /* Уменьшенный внутренний отступ */  
-  background-color: #f9f9f9; /* Светлый фон */  
-  border-radius: 10px; /* Скругленные углы */  
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Лёгкая тень */  
   width: 100%; /* Занимает всю ширину экрана */  
   max-width: 800px; /* Ограничение максимальной ширины */  
   box-sizing: border-box; /* Учитывать padding в ширине */

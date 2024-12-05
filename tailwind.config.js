@@ -6,6 +6,8 @@ module.exports = {
     "./src/components/WorkoutGroup.js",
     "./src/components/ConfirmationModal.js",
     "./src/components/Account.js",
+    "./src/components/NavigationBar.js",
+    "./src/components/ExcerciseInput.js",
   ],
   theme: {
     extend: {
