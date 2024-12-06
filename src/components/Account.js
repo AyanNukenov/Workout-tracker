@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";  
+import { motion } from "framer-motion"; // Для анимаций  
+import { Dumbbell, Award, Smile } from "lucide-react"; // Заменили Barbell на Dumbbell  
 
 const Account = ({ username }) => {  
   const [workoutCount, setWorkoutCount] = useState(0);  
@@ -7,9 +9,12 @@ const Account = ({ username }) => {
 
   useEffect(() => {  
     // Загружаем данные тренировок из localStorage  
-    const workouts = JSON.parse(  
-      localStorage.getItem(`workouts_${username}_${localStorage.getItem("currentPassword")}`)  
-    ) || [];  
+    const workouts =  
+      JSON.parse(  
+        localStorage.getItem(  
+          `workouts_${username}_${localStorage.getItem("currentPassword")}`  
+        )  
+      ) || [];  
     setWorkoutCount(workouts.length);  
 
     if (workouts.length > 0) {  
@@ -20,63 +25,72 @@ const Account = ({ username }) => {
   }, [username]);  
 
   return (  
-    <div className="bg-gradient-to-b from-gray-100 to-gray-300 min-h-screen p-4 flex flex-col items-center">  
+    <div className="bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 min-h-screen p-6 flex flex-col items-center text-white">  
       {/* Приветствие */}  
-      <h1 className="text-2xl font-bold text-blue-500 mb-6 animate-fadeIn">  
+      <motion.h1  
+        className="text-3xl font-bold mb-8"  
+        initial={{ opacity: 0, y: -30 }}  
+        animate={{ opacity: 1, y: 0 }}  
+        transition={{ duration: 0.8 }}  
+      >  
         Добро пожаловать, {username}!  
-      </h1>  
+      </motion.h1>  
 
       {/* Карточка с количеством тренировок */}  
-      <div className="bg-white shadow-md rounded-lg p-4 w-full max-w-sm flex flex-col items-center mb-4 animate-fadeIn">  
-        <img  
-          src="/assets/athlete.png"  
-          alt="Атлет"  
-          className="w-24 h-24 mb-4"  
-        />  
+      <motion.div  
+        className="bg-white text-black shadow-lg rounded-xl p-6 w-full max-w-sm flex flex-col items-center mb-6 hover:shadow-2xl transition-shadow duration-300"  
+        initial={{ opacity: 0, scale: 0.9 }}  
+        animate={{ opacity: 1, scale: 1 }}  
+        transition={{ duration: 0.8 }}  
+      >  
+        <Smile className="text-blue-500 w-16 h-16 mb-4" />  
         <p className="text-lg font-semibold">За все время Вы сделали:</p>  
-        <p className="text-2xl font-bold text-blue-500">{workoutCount} упражнения(-й)</p>  
-      </div>  
+        <p className="text-3xl font-bold text-blue-600">{workoutCount} упражнения(-й)</p>  
+      </motion.div>  
 
       {/* Блок с максимальным и минимальным весом */}  
-      <div className="flex flex-col sm:flex-row gap-4 w-full max-w-sm">  
+      <div className="flex flex-col sm:flex-row gap-6 w-full max-w-2xl">  
         {/* Максимальный вес */}  
-        <div className="bg-white shadow-md rounded-lg p-4 flex-1 flex flex-col items-center animate-fadeIn">  
-          <img  
-            src="/assets/barbell.png"  
-            alt="Штанга"  
-            className="w-24 h-24 mb-4"  
-          />  
+        <motion.div  
+          className="bg-white text-black shadow-lg rounded-xl p-6 flex-1 flex flex-col items-center hover:shadow-2xl transition-shadow duration-300"  
+          initial={{ opacity: 0, x: -50 }}  
+          animate={{ opacity: 1, x: 0 }}  
+          transition={{ duration: 0.8 }}  
+        >  
+          <Dumbbell className="text-green-500 w-16 h-16 mb-4" />  
           <p className="text-lg font-semibold text-center">Максимальный вес в упражнении:</p>  
-          <p className="text-2xl font-bold text-green-500">{highestWeight} кг</p>  
-        </div>  
+          <p className="text-3xl font-bold text-green-600">{highestWeight} кг</p>  
+        </motion.div>  
 
         {/* Минимальный вес */}  
-        <div className="bg-white shadow-md rounded-lg p-4 flex-1 flex flex-col items-center animate-fadeIn">  
-          <img  
-            src="/assets/skinny.png"  
-            alt="Худой человек"  
-            className="w-24 h-24 mb-4"  
-          />  
+        <motion.div  
+          className="bg-white text-black shadow-lg rounded-xl p-6 flex-1 flex flex-col items-center hover:shadow-2xl transition-shadow duration-300"  
+          initial={{ opacity: 0, x: 50 }}  
+          animate={{ opacity: 1, x: 0 }}  
+          transition={{ duration: 0.8 }}  
+        >  
+          <Dumbbell className="text-red-500 w-16 h-16 mb-4" />  
           <p className="text-lg font-semibold text-center">Минимальный вес в упражнении:</p>  
-          <p className="text-2xl font-bold text-red-500">{lowestWeight} кг</p>  
-        </div>  
+          <p className="text-3xl font-bold text-red-600">{lowestWeight} кг</p>  
+        </motion.div>  
       </div>  
 
       {/* Рекомендация */}  
       {lowestWeight < 50 && (  
-        <div className="bg-white shadow-md rounded-lg p-4 w-full max-w-sm mt-6 animate-fadeIn">  
-          <img  
-            src="/assets/motivation.png"  
-            alt="Мотивация"  
-            className="w-24 h-24 mx-auto mb-4"  
-          />  
+        <motion.div  
+          className="bg-white text-black shadow-lg rounded-xl p-6 w-full max-w-sm mt-8 hover:shadow-2xl transition-shadow duration-300"  
+          initial={{ opacity: 0, y: 30 }}  
+          animate={{ opacity: 1, y: 0 }}  
+          transition={{ duration: 0.8 }}  
+        >  
+          <Award className="text-yellow-500 w-16 h-16 mx-auto mb-4" />  
           <p className="text-lg font-semibold text-center text-gray-700">  
             Рекомендуем усилить акцент на эту группу мышц:  
           </p>  
-          <p className="text-center text-red-500 font-bold mt-2 text-center">  
-            Минимальный вес в упражнении: <br/> {lowestWeight} кг  
+          <p className="text-center text-red-500 font-bold mt-2">  
+            Минимальный вес в упражнении: <br /> {lowestWeight} кг  
           </p>  
-        </div>  
+        </motion.div>  
       )}  
     </div>  
   );  
