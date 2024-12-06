@@ -44,7 +44,7 @@ const Account = ({ username }) => {
         transition={{ duration: 0.8 }}  
       >  
         <Smile className="text-blue-500 w-16 h-16 mb-4" />  
-        <p className="text-lg font-semibold">За все время Вы сделали:</p>  
+        <p className="text-lg font-semibold text-center">За все время <br/> Вы сделали:</p>  
         <p className="text-2xl font-bold text-blue-600 text-center">{workoutCount} <br/> упражнения(-й)</p>  
       </motion.div>  
 
