@@ -25,10 +25,10 @@ const Account = ({ username }) => {
   }, [username]);  
 
   return (  
-    <div className="bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 min-h-screen p-6 flex flex-col items-center text-white">  
+    <div className="bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 min-h-screen p-6 flex flex-col items-center text-white rounded-lg">  
       {/* Приветствие */}  
       <motion.h1  
-        className="text-3xl font-bold mb-8"  
+        className="text-2xl font-bold mb-8 text-center"  
         initial={{ opacity: 0, y: -30 }}  
         animate={{ opacity: 1, y: 0 }}  
         transition={{ duration: 0.8 }}  
@@ -45,7 +45,7 @@ const Account = ({ username }) => {
       >  
         <Smile className="text-blue-500 w-16 h-16 mb-4" />  
         <p className="text-lg font-semibold">За все время Вы сделали:</p>  
-        <p className="text-3xl font-bold text-blue-600">{workoutCount} упражнения(-й)</p>  
+        <p className="text-2xl font-bold text-blue-600 text-center">{workoutCount} <br/> упражнения(-й)</p>  
       </motion.div>  
 
       {/* Блок с максимальным и минимальным весом */}  
@@ -59,7 +59,7 @@ const Account = ({ username }) => {
         >  
           <Dumbbell className="text-green-500 w-16 h-16 mb-4" />  
           <p className="text-lg font-semibold text-center">Максимальный вес в упражнении:</p>  
-          <p className="text-3xl font-bold text-green-600">{highestWeight} кг</p>  
+          <p className="text-2xl font-bold text-green-600">{highestWeight} кг</p>  
         </motion.div>  
 
         {/* Минимальный вес */}  
@@ -71,7 +71,7 @@ const Account = ({ username }) => {
         >  
           <Dumbbell className="text-red-500 w-16 h-16 mb-4" />  
           <p className="text-lg font-semibold text-center">Минимальный вес в упражнении:</p>  
-          <p className="text-3xl font-bold text-red-600">{lowestWeight} кг</p>  
+          <p className="text-2xl font-bold text-red-600">{lowestWeight} кг</p>  
         </motion.div>  
       </div>  
 
