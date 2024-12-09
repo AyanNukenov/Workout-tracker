@@ -6,10 +6,12 @@ import ScrollToTopButton from './components/ScrollToTopButton';
 import AuthForm from './components/AuthForm';  
 import Statistics from './components/Statistics';  
 import NavigationBar from './components/NavigationBar'; // Новый компонент  
-import Account from './components/Account'; // Импортируем компонент Account  
+import Account from './components/Account'; // Импортируем компонент Account 
+import Pagination from './components/Pagination';
 
 function App() {  
   const [workouts, setWorkouts] = useState([]);  
+  const [workoutCount, setWorkoutCount] = useState(0); // Состояние для количества тренировок
   const [activePage, setActivePage] = useState('account'); // Текущая страница  
   const [currentUser, setCurrentUser] = useState(() => {  
     return localStorage.getItem('currentUser') || '';  
@@ -17,6 +19,10 @@ function App() {
   const [currentPassword, setCurrentPassword] = useState(() => {  
     return localStorage.getItem('currentPassword') || '';  
   });  
+
+  // Пагинация  
+  const [currentPage, setCurrentPage] = useState(1); // Текущая страница пагинации  
+  const itemsPerPage = 5; // Количество тренировок на одной странице  
 
   // Загружаем тренировки для текущего пользователя при изменении currentUser  
   useEffect(() => {  
@@ -29,6 +35,7 @@ function App() {
   const addWorkout = (workout) => {  
     const updatedWorkouts = [...workouts, { ...workout, id: Date.now() }];  
     setWorkouts(updatedWorkouts);  
+    setWorkoutCount(updatedWorkouts.length); // Обновляем счётчик тренировок
     localStorage.setItem(`workouts_${currentUser}_${currentPassword}`, JSON.stringify(updatedWorkouts));  
   };  
 
@@ -56,6 +63,26 @@ function App() {
     setActivePage('auth'); // Возвращаемся на страницу авторизации  
   };  
 
+  // Группируем тренировки по дате  
+  const groupedWorkouts = workouts.reduce((groups, workout) => {  
+    if (!groups[workout.date]) {  
+      groups[workout.date] = [];  
+    }  
+    groups[workout.date].push(workout);  
+    return groups;  
+  }, {});  
+
+  // Преобразуем объект в массив для удобства работы  
+  const groupedWorkoutsArray = Object.entries(groupedWorkouts);  
+
+  // Вычисляем группы тренировок для текущей страницы  
+  const indexOfLastGroup = currentPage * itemsPerPage;  
+  const indexOfFirstGroup = indexOfLastGroup - itemsPerPage;  
+  const currentGroupedWorkouts = groupedWorkoutsArray.slice(  
+    indexOfFirstGroup,  
+    indexOfLastGroup  
+  );  
+
   return (  
     <div className="App">  
       <Header />  
@@ -69,8 +96,16 @@ function App() {
             {activePage === 'account' && <Account username={currentUser} workouts={workouts} />} {/* Используем компонент Account */}  
             {activePage === 'addWorkout' && (  
               <>  
-                <AddWorkout onAdd={addWorkout} currentUser={currentUser} />  
-                <WorkoutList workouts={workouts} onRemove={removeWorkout} />  
+                <AddWorkout onAdd={addWorkout} currentUser={currentUser} workoutCount={workoutCount}  
+                    setWorkoutCount={setWorkoutCount}/>  
+                <WorkoutList  groupedWorkouts={currentGroupedWorkouts} onRemove={removeWorkout} />  
+                {/* Пагинация */}  
+                <Pagination  
+                  totalItems={groupedWorkoutsArray.length}  
+                  itemsPerPage={itemsPerPage}  
+                  currentPage={currentPage}  
+                  onPageChange={(page) => setCurrentPage(page)} // Обновляем текущую страницу  
+                />  
                 <ScrollToTopButton />  
               </>  
             )}  

@@ -6,7 +6,8 @@ import Modal from "./Modal.js";
 const Account = ({ username }) => {  
   const [workoutCount, setWorkoutCount] = useState(0);  
   const [highestWeight, setHighestWeight] = useState(0);  
-  const [lowestWeight, setLowestWeight] = useState(0);  
+  const [lowestWeightValue, setLowestWeightValue] = useState(0);  
+  const [lowestWeightExercise, setLowestWeightExercise] = useState(""); 
 
   // Состояния для модальных окон  
   const [isWorkoutModalOpen, setIsWorkoutModalOpen] = useState(false);  
@@ -25,10 +26,19 @@ const Account = ({ username }) => {
     setWorkoutCount(workouts.length);  
 
     if (workouts.length > 0) {  
-      const weights = workouts.map((workout) => workout.weight || 0);  
-      setHighestWeight(Math.max(...weights));  
-      setLowestWeight(Math.min(...weights));  
-    }  
+     // Находим максимальный вес и соответствующее упражнение  
+    const maxWorkout = workouts.reduce((max, workout) =>  
+      workout.weight > max.weight ? workout : max  
+    );  
+    setHighestWeight(`${maxWorkout.exercise} ${maxWorkout.weight}`);  
+
+    // Находим минимальный вес и соответствующее упражнение  
+    const minWorkout = workouts.reduce((min, workout) =>  
+      workout.weight < min.weight ? workout : min  
+    );  
+    setLowestWeightValue(minWorkout.weight); // Устанавливаем числовое значение  
+    setLowestWeightExercise(minWorkout.exercise); // Устанавливаем название упражнения 
+  }  
   }, [username]);  
 
   return (  
@@ -55,7 +65,7 @@ const Account = ({ username }) => {
         <p className="text-lg font-semibold text-center">  
           За все время <br /> Вы сделали:  
         </p>  
-        <p className="text-2xl font-bold text-blue-600 text-center">  
+        <p className="text-lg font-bold text-blue-600 text-center">  
           {workoutCount} <br /> упражнения(-й)  
         </p>  
       </motion.div>  
@@ -74,7 +84,7 @@ const Account = ({ username }) => {
           <p className="text-lg font-semibold text-center">  
             Максимальный вес в упражнении:  
           </p>  
-          <p className="text-2xl font-bold text-green-600">{highestWeight} кг</p>  
+          <p className="text-lg font-bold text-green-600 text-center">{highestWeight} кг</p>  
         </motion.div>  
 
         {/* Минимальный вес */}  
@@ -89,12 +99,12 @@ const Account = ({ username }) => {
           <p className="text-lg font-semibold text-center">  
             Минимальный вес в упражнении:  
           </p>  
-          <p className="text-2xl font-bold text-red-600">{lowestWeight} кг</p>  
+          <p className="text-lg font-bold text-red-600 text-center">{lowestWeightExercise} {lowestWeightValue} кг</p>  
         </motion.div>  
       </div>  
 
       {/* Рекомендация */}  
-      {lowestWeight < 50 && (  
+      {lowestWeightValue < 50 && (  
         <motion.div  
           className="bg-white text-black shadow-lg rounded-xl p-6 w-full max-w-sm mt-8 hover:shadow-2xl transition-shadow duration-300 cursor-pointer"  
           initial={{ opacity: 0, y: 30 }}  
@@ -104,10 +114,10 @@ const Account = ({ username }) => {
         >  
           <Award className="text-yellow-500 w-16 h-16 mx-auto mb-4" />  
           <p className="text-lg font-semibold text-center text-gray-700">  
-            Рекомендуем усилить акцент на эту группу мышц:  
+            Рекомендуем усилить акцент:  
           </p>  
           <p className="text-center text-red-500 font-bold mt-2">  
-            Минимальный вес в упражнении: <br /> {lowestWeight} кг  
+             {lowestWeightExercise} {lowestWeightValue} кг  
           </p>  
         </motion.div>  
       )}  
@@ -123,7 +133,7 @@ const Account = ({ username }) => {
           Ты сможешь сделать себя лучше!  
         </h2>  
         <p className="text-gray-600">  
-          Не ленись! <br /> <strong>Невозможное возможно!</strong>  
+          <strong>Не ленись!</strong>  
         </p>  
       </Modal>  
 
@@ -133,8 +143,8 @@ const Account = ({ username }) => {
           alt="Barbell"  
           className="w-32 h-32 mx-auto mb-4"  
         />  
-        <h2 className="text-xl font-bold text-gray-800 mb-2">Ты можешь больше, друг!</h2>  
-        <p className="text-gray-600">Разработчики в тебя верят! Докажи всем!</p>  
+        <h2 className="text-xl font-bold text-gray-800 mb-2">Друг, ты можешь больше!</h2>  
+        <p className="text-gray-600">Докажи всем!</p>  
       </Modal>  
 
       <Modal isOpen={isMinWeightModalOpen} onClose={() => setIsMinWeightModalOpen(false)}>  
@@ -144,10 +154,10 @@ const Account = ({ username }) => {
           className="w-32 h-32 mx-auto mb-4"  
         />  
         <h2 className="text-xl font-bold text-gray-800 mb-2">  
-          Без труда не вынешь рыбку из пруда!  
+          Не расстраивайся, большие результаты еще впереди!  
         </h2>  
         <p className="text-gray-600">  
-          Паши в зале, чтобы потом на пляже красоваться своим телом!  
+          Но только через тяжелый труд!  
         </p>  
       </Modal>  
 
@@ -161,9 +171,9 @@ const Account = ({ username }) => {
           className="w-32 h-32 mx-auto mb-4"  
         />  
         <h2 className="text-xl font-bold text-gray-800 mb-2">  
-          Без труда не вынешь рыбку из пруда!  
+          Нет секретного ингредиента! 
         </h2>  
-        <p className="text-gray-600">Работай над собой, чтобы достичь своих целей!</p>  
+        <p className="text-gray-600">Работай над собой сегодня, чтобы быть довольным завтра!</p>  
       </Modal>  
     </div>  
   );  

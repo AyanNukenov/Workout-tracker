@@ -24,7 +24,7 @@ function WorkoutItem({ workout, onRemove }) {
 
   return (  
     <div className="workout-item">  
-      <h3>{workout.exercise}</h3>  
+      <h3><strong>{workout.exercise}</strong></h3>  
       <p>{`Повторения: ${workout.reps}, сеты: ${workout.sets}, вес: ${workout.weight} кг`}</p>  
       <p>{`Дата: ${workout.date}`}</p>  
       <button  

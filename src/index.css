@@ -172,6 +172,12 @@ ul {
   margin: 0;  
 } 
 
+.workout-item {
+  text-align: center;
+}
+
+
+
 @media (max-width: 768px) {  
   .input {  
     width: 90%;  
