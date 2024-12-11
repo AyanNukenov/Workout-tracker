@@ -117,14 +117,14 @@ const Statistics = ({ workouts, onBack }) => {
   console.log("Данные для диаграммы:", chartData);  
 
   return (  
-    <div className="statistics-container p-4 flex flex-col items-center gap-4">  
+    <div className="statistics-container p-4 flex flex-col items-center text-center gap-4">  
       
 
       {/* Выбор упражнения */}  
       <ExerciseInput exercise={selectedExercise} setExercise={handleExerciseSelect} />  
 
       {/* Выбор периода */}  
-      <div className="time-period-buttons flex gap-2 mt-4">  
+      <div className="time-period-buttons flex text-center items-center gap-2 mt-4">  
         <button  
           className={`px-4 py-2 rounded ${timePeriod === "month" ? "bg-blue-500 text-white" : "bg-gray-200"}`}  
           onClick={() => handlePeriodChange("month")}  
@@ -157,8 +157,8 @@ const Statistics = ({ workouts, onBack }) => {
         </button>  
       </div>  
 
-      {/* Поля для произвольного периода */}  
-      {timePeriod === "custom" && (  
+        {/* Поля для произвольного периода */}  
+        {timePeriod === "custom" && (  
         <div className="custom-period-inputs mt-4 flex gap-4">  
           <div>  
             <label className="block text-gray-700">Начальная дата:</label>  
