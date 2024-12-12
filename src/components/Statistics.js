@@ -4,12 +4,13 @@ import ExerciseInput from "./ExerciseInput";
 import { format, subMonths, isWithinInterval, parseISO } from "date-fns";  
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"; // Импорт библиотеки 
 
-const Statistics = ({ workouts, onBack }) => {  
+const Statistics = ({ workouts }) => {  
   const [selectedExercise, setSelectedExercise] = useState("");  
   const [filteredWorkouts, setFilteredWorkouts] = useState([]);  
   const [timePeriod, setTimePeriod] = useState("month"); // Default period: month  
   const [customStartDate, setCustomStartDate] = useState(""); // Начальная дата для произвольного периода  
   const [customEndDate, setCustomEndDate] = useState(""); // Конечная дата для произвольного периода  
+  const [errorMessage, setErrorMessage] = useState(""); // Ошибка при не заполнении нужных полей
 
   // Фильтрация тренировок по выбранному периоду  
   const filterWorkoutsByPeriod = (exercise, period) => {  
@@ -84,14 +85,14 @@ const Statistics = ({ workouts, onBack }) => {
   // Обработка нажатия кнопки "Создать отчет"  
   const handleCreateReport = () => {  
     if (!selectedExercise) {  
-      alert("Пожалуйста, выберите упражнение.");  
+      setErrorMessage("Пожалуйста, выберите упражнение.");  
       return;  
     }  
 
     // Если выбран произвольный период, проверяем даты  
     if (timePeriod === "custom") {  
         if (!customStartDate || !customEndDate) {  
-        alert("Пожалуйста, выберите начальную и конечную дату.");  
+        setErrorMessage("Пожалуйста, выберите начальную и конечную дату.");  
         return;  
         }  
     }  
@@ -105,7 +106,8 @@ const Statistics = ({ workouts, onBack }) => {
     // Сохраняем отчет (например, в локальном состоянии или локальном хранилище)  
     // saveReport(report);
 
-    filterWorkoutsByPeriod(selectedExercise, timePeriod);  
+    filterWorkoutsByPeriod(selectedExercise, timePeriod); 
+    setErrorMessage(""); // Очищаем ошибку при создании отчета 
   };  
 
   // Данные для диаграммы  
@@ -189,6 +191,11 @@ const Statistics = ({ workouts, onBack }) => {
               Создать отчет  
             </button>  
 
+             {/* Сообщение об ошибке */}  
+            {errorMessage && (  
+            <p className="mt-2 text-red-500">{errorMessage}</p> // Появляется только при ошибке  
+          )}  
+
             {/* Отображение статистики */}  
             {filteredWorkouts.length === 0 ? (  
               <p className="mt-4 text-gray-500">Нет данных для отображения статистики.</p>  
@@ -203,8 +210,9 @@ const Statistics = ({ workouts, onBack }) => {
                 {({ zoomIn, zoomOut, resetTransform }) => (  
                   <>  
                    
-                    <div className="absolute top-2 left-2 flex items-center gap-10 z-10">  
-                      <h2 className="text-lg font-bold">{selectedExercise}</h2>  
+                    <div className="absolute top-2 left-2 right-2 flex items-center gap-10 z-10">  
+                      <h2 className="text-lg font-bold truncate max-w-[70%]"
+                        >{selectedExercise}</h2>  
                       <div className="flex gap-2">  
                         <button  
                           onClick={zoomIn}  
@@ -230,7 +238,7 @@ const Statistics = ({ workouts, onBack }) => {
                      
                     <TransformComponent>  
                       <div className="response"> 
-                        <p className="text-lg">График показателей</p>  
+                        <p className="text-medium">График показателей</p>  
                         <ResponsiveContainer width="100%" height="100%">  
                           <LineChart data={chartData} margin={{ top: 60, right: 30, left: 20, bottom: 60 }}>  
                             <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />  
@@ -261,7 +269,7 @@ const Statistics = ({ workouts, onBack }) => {
                             <Line  
                               type="monotone"  
                               dataKey="вес"  
-                              stroke="#8884d8"  
+                              stroke="#1E90FF"  
                               strokeWidth={2}  
                               dot={{ r: 4 }}  
                               activeDot={{ r: 6 }}  
