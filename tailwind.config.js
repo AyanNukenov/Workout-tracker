@@ -11,6 +11,7 @@ module.exports = {
     "./src/components/AddWorkout.js",
     "./src/components/Pagination.js",
     "./src/components/Statistics.js",
+    ".src/components/MassGainProgram.js",
   ],
   theme: {
     extend: {

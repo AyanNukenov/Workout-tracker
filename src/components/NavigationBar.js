@@ -5,7 +5,9 @@ const NavigationBar = ({ activePage, setActivePage, onLogout }) => {
     { label: 'Аккаунт', page: 'account' },  
     { label: 'Тренировки', page: 'addWorkout' },  
     { label: 'Статистика', page: 'statistics' },  
+    { label: 'Программы', page: 'programs' }, // Новая кнопка  
     { label: 'Выйти', page: 'logout' },  
+    
   ];  
 
   const [isSticky, setIsSticky] = useState(false);  

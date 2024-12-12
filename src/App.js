@@ -8,6 +8,8 @@ import Statistics from './components/Statistics';
 import NavigationBar from './components/NavigationBar'; // Новый компонент  
 import Account from './components/Account'; // Импортируем компонент Account 
 import Pagination from './components/Pagination';
+import Programs from './components/Programs';
+import MassGainProgram from './components/MassGainProgram';
 
 function App() {  
   const [workouts, setWorkouts] = useState([]);  
@@ -110,6 +112,9 @@ function App() {
               </>  
             )}  
             {activePage === 'statistics' && <Statistics workouts={workouts} />}  
+             {/* Добавляем компонент Programs */}  
+          {activePage === 'programs' && <Programs setActivePage={setActivePage} />} 
+          {activePage === 'massGainProgram' && <MassGainProgram />} {/* Новая страница */}
           </div>  
         </>  
       )}  
