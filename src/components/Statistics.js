@@ -159,70 +159,122 @@ const Statistics = ({ workouts, onBack }) => {
 
         {/* Поля для произвольного периода */}  
         {timePeriod === "custom" && (  
-        <div className="custom-period-inputs mt-4 flex gap-4">  
-          <div>  
-            <label className="block text-gray-700">Начальная дата:</label>  
-            <input  
-              type="date"  
-              className="border rounded px-2 py-1"  
-              value={customStartDate}  
-              onChange={(e) => setCustomStartDate(e.target.value)}  
-            />  
-          </div>  
-          <div>  
-            <label className="block text-gray-700">Конечная дата:</label>  
-            <input  
-              type="date"  
-              className="border rounded px-2 py-1"  
-              value={customEndDate}  
-              onChange={(e) => setCustomEndDate(e.target.value)}  
-            />  
-          </div>  
-        </div>  
-      )}  
+            <div className="custom-period-inputs mt-4 flex gap-4">  
+              <div>  
+                <label className="block text-gray-700">Начальная дата:</label>  
+                <input  
+                  type="date"  
+                  className="border rounded px-2 py-1"  
+                  value={customStartDate}  
+                  onChange={(e) => setCustomStartDate(e.target.value)}  
+                />  
+              </div>  
+              <div>  
+                <label className="block text-gray-700">Конечная дата:</label>  
+                <input  
+                  type="date"  
+                  className="border rounded px-2 py-1"  
+                  value={customEndDate}  
+                  onChange={(e) => setCustomEndDate(e.target.value)}  
+                />  
+              </div>  
+            </div>  
+              )}  
 
-      {/* Кнопка "Создать отчет" */}  
-      <button  
-        className="add-recharts bg-blue-500 text-white px-4 py-2 rounded mt-4"  
-        onClick={handleCreateReport}  
-      >  
-        Создать отчет  
-      </button>  
+            {/* Кнопка "Создать отчет" */}  
+            <button  
+              className="add-recharts bg-blue-500 text-white px-4 py-2 rounded mt-4"  
+              onClick={handleCreateReport}  
+            >  
+              Создать отчет  
+            </button>  
 
-      {/* Отображение статистики */}  
-      {filteredWorkouts.length === 0 ? (  
-        <p className="mt-4 text-gray-500">Нет данных для отображения статистики.</p>  
-      ) : (  
-        <div className="chart-container mt-4" style={{  
-          width: "100%",  
-          height: "400px",  
-          overflow: "hidden", 
-          position: "relative",  
-        }}  >  
-        <TransformWrapper  
-            initialScale={1}   
-            minScale={0.5}  
-            maxScale={3}  
-            centerOnInit={true}  
-            > 
-            {({ zoomIn, zoomOut, resetTransform, ...rest }) => (   
-               <TransformComponent>  
-                <div style={{ width: "420px", height: "100%" }}>  
-                  <h2 className="text-lg font-bold mb-2 text-center">{selectedExercise}</h2>  
-                  <ResponsiveContainer width="100%" height={350}>  
-                    <LineChart data={chartData}>  
-                    <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0"/>  
-                    <XAxis dataKey="date" stroke="#61dafb"/>  
-                    <YAxis stroke="#61dafb" domain={[0, 'dataMax + 10']} />   
-                    <Tooltip />  
-                    <Line type="monotone" dataKey="вес" stroke="#8884d8" />  
-                    </LineChart>  
-                  </ResponsiveContainer>  
-                </div> 
-               </TransformComponent>   
-            )}   
-           </TransformWrapper>   
-        </div>  
+            {/* Отображение статистики */}  
+            {filteredWorkouts.length === 0 ? (  
+              <p className="mt-4 text-gray-500">Нет данных для отображения статистики.</p>  
+            ) : (  
+              <div className="chart-container">  
+              <TransformWrapper  
+                initialScale={1}  
+                minScale={1}  
+                maxScale={2}  
+                centerOnInit={true}  
+              >  
+                {({ zoomIn, zoomOut, resetTransform }) => (  
+                  <>  
+                   
+                    <div className="absolute top-2 left-2 flex items-center gap-10 z-10">  
+                      <h2 className="text-lg font-bold">{selectedExercise}</h2>  
+                      <div className="flex gap-2">  
+                        <button  
+                          onClick={zoomIn}  
+                          className="bg-blue-500 text-white px-2 py-1 rounded shadow-md hover:bg-blue-600"  
+                        >  
+                          +  
+                        </button>  
+                        <button  
+                          onClick={zoomOut}  
+                          className="bg-blue-500 text-white px-2 py-1 rounded shadow-md hover:bg-blue-600"  
+                        >  
+                          -  
+                        </button>  
+                        <button  
+                          onClick={resetTransform}  
+                          className="bg-blue-500 text-white px-2 py-1 rounded shadow-md hover:bg-blue-600"  
+                        >  
+                          Сброс  
+                        </button>  
+                      </div>  
+                    </div>  
+      
+                     
+                    <TransformComponent>  
+                      <div className="response"> 
+                        <p className="text-lg">График показателей</p>  
+                        <ResponsiveContainer width="100%" height="100%">  
+                          <LineChart data={chartData} margin={{ top: 60, right: 30, left: 20, bottom: 60 }}>  
+                            <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />  
+                            <XAxis  
+                              dataKey="date"  
+                              stroke="#61dafb"  
+                              tick={{ fontSize: 12 }}  
+                              tickMargin={10}  
+                              interval="preserveStartEnd" 
+                              angle={-45} // Поворачиваем метки на 45 градусов  
+                              textAnchor="end" // Выравниваем текст 
+                            />  
+                            <YAxis  
+                              stroke="#61dafb"  
+                              domain={[0, 300]}  
+                              tick={{ fontSize: 12 }}  
+                              tickMargin={10}  
+                            />  
+                            <Tooltip  
+                              contentStyle={{  
+                                backgroundColor: "#61dafb",  
+                                color: "#ffffff",  
+                                borderRadius: "5px",  
+                                padding: "5px",  
+                              }}  
+                              labelStyle={{ fontWeight: "bold" }}  
+                            />  
+                            <Line  
+                              type="monotone"  
+                              dataKey="вес"  
+                              stroke="#8884d8"  
+                              strokeWidth={2}  
+                              dot={{ r: 4 }}  
+                              activeDot={{ r: 6 }}  
+                            />  
+                          </LineChart>  
+                        </ResponsiveContainer>  
+                      </div>  
+                    </TransformComponent>  
+                  </>  
+                )}  
+              </TransformWrapper>  
+            </div>  
+         
       )}  
     </div>  
   );  

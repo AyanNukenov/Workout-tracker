@@ -67,6 +67,22 @@ header h3 {
   gap: 5px;
 }  
 
+.input-container {  
+  width: 100%; /* Задаём одинаковую ширину */  
+  max-width: 300px; /* Ограничиваем максимальную ширину */  
+  display: flex;  
+  flex-direction: column;  
+  align-items: center; /* Центрируем содержимое */  
+  position: relative; /* Для работы с автодополнением */  
+}  
+
+.input-group {  
+  display: flex;  
+  flex-direction: column; /* Все инпуты в колонке */  
+  align-items: center; /* Центрируем инпуты */  
+  width: 100%; /* Задаём одинаковую ширину */  
+} 
+
 .input {  
   margin: 5px 0;  
   padding: 10px;  
@@ -126,6 +142,7 @@ header h3 {
   margin: 10px; /* Уменьшенный отступ для мобильных */  
   padding: 15px; /* Уменьшенный внутренний отступ */  
   width: 100%; /* Занимает всю ширину экрана */  
+  height: auto;
   max-width: 800px; /* Ограничение максимальной ширины */  
   box-sizing: border-box; /* Учитывать padding в ширине */
 }  
@@ -147,16 +164,22 @@ header h3 {
 }  
 
 .chart-container {  
-  width: 100%; /* Занимает всю ширину экрана */  
-  max-width: 800px; /* Ограничение ширины для мобильных */  
+  width: 100%; /* Занимает всю ширину родительского контейнера */  
+  max-width: 800px; /* Ограничение ширины для больших экранов */  
   background-color: #ffffff; /* Белый фон */  
   border: 2px solid blue; /* Голубая рамка */  
   border-radius: 10px; /* Скругленные углы */  
-  padding: 10px; /* Уменьшенный отступ */  
+  padding: 10px; /* Отступы внутри контейнера */  
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Лёгкая тень */  
-  margin-top: 10px; /* Отступ сверху */  
-  height: 300px; /* Фиксированная высота */  
-  overflow: hidden; /* Предотвращает выход элементов за пределы */  
+  /* margin: 10px auto; Центрирование и отступ сверху   */
+  height: 450px; /* Минимальная высота для адаптивности */  
+  display: flex; /* Flexbox для корректного размещения содержимого */  
+  flex-direction: column;
+  justify-content: center; /* Центрирование содержимого по горизонтали */  
+  align-items: center; /* Центрирование содержимого по вертикали */ 
+  position: relative; 
+  
+  
 }  
 
 .chart-container .recharts-tooltip-wrapper {  
@@ -166,10 +189,19 @@ header h3 {
   padding: 5px;  
 }  
 
+.response {
+  width: 320px;
+  height: 350px;
+  max-height: none;
+  position: relative;
+  
+}
+
 ul {  
   list-style: none;  
   padding: 0;  
   margin: 0;  
+  top: 100%; /* Список появляется сразу под инпутом */
 } 
 
 .workout-item {

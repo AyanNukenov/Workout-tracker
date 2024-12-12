@@ -8,6 +8,9 @@ module.exports = {
     "./src/components/Account.js",
     "./src/components/NavigationBar.js",
     "./src/components/ExcerciseInput.js",
+    "./src/components/AddWorkout.js",
+    "./src/components/Pagination.js",
+    "./src/components/Statistics.js",
   ],
   theme: {
     extend: {

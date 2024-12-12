@@ -114,19 +114,19 @@ export default function ExerciseInput({ exercise, setExercise }) {
   };  
 
   return (  
-    <div className="relative w-full max-w-xs mx-auto" ref={inputRef} >  
+    <div className="input-container relative" ref={inputRef} >  
       <input  
         type="text"  
         placeholder="Упражнение"  
         value={exercise}  
         onChange={handleChange}  
         onBlur={handleBlur} // Проверяем ввод при потере фокуса  
-        className="input border p-2 rounded"  
+        className="input"  
          
       />  
       {suggestions.length > 0 && (  
         <ul  
-          className="absolute border border-gray-300 bg-white rounded-md mt-1 w-full z-10"  
+          className="absolute border border-gray-300 bg-white rounded-md mt-1 w-full z-10 text-center"  
           style={{ maxHeight: "200px", overflowY: "auto" }}  
         >  
           {suggestions.map((suggestion, index) => (  

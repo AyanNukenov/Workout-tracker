@@ -58,7 +58,7 @@ const AddWorkout = ({ onAdd, currentUser, workoutCount  }) => {
       }}  > 
       Спортсмен: {currentUser}</h2> {/* Отображаем имя пользователя */}  
       <form onSubmit={handleSubmit} className="add-workout-form">  
-      
+        <div className="input-group">
         <ExerciseInput exercise={exercise} setExercise={setExercise}/>   
         <input  
           type="text"  
@@ -81,6 +81,7 @@ const AddWorkout = ({ onAdd, currentUser, workoutCount  }) => {
           onChange={(e) => setWeight(e.target.value)}  
           className="input border p-2 rounded"  
         />  
+        </div>
         <div className="flex">  
           <button type="submit" className="add-button bg-blue-500 text-white p-2 rounded mr-2">  
             Добавить упражнение  
