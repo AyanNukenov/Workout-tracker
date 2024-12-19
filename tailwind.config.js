@@ -12,6 +12,7 @@ module.exports = {
     "./src/components/Pagination.js",
     "./src/components/Statistics.js",
     ".src/components/MassGainProgram.js",
+    ".src/components/Programs.js",
   ],
   theme: {
     extend: {

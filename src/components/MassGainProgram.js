@@ -1,35 +1,11 @@
-import React, { useState } from 'react';  
-import { FaRunning, FaDumbbell, FaWeight } from 'react-icons/fa';  
+import React, { useState } from "react";  
+import { FaRunning, FaDumbbell, FaWeight } from "react-icons/fa";  
+import gainPrograms from "./gainprograms.json"; // Импортируем JSON-файл  
 
 function MassGainProgram() {  
-  const [bodyType, setBodyType] = useState('ectomorph'); // По умолчанию эктоморф  
+  const [bodyType, setBodyType] = useState("ectomorph"); // По умолчанию эктоморф  
 
-  const programs = {  
-    ectomorph: {  
-      title: 'Рекомендуемая программа для эктоморфа (вес < 65 кг)',  
-      description: [  
-        <span><strong>Понедельник:</strong> Становая тяга, жим лежа, подтягивания.</span>,  
-        <span><strong>Среда:</strong> Приседания, жим на наклонной скамье, тяга штанги в наклоне.</span>,  
-        <span><strong>Пятница:</strong>Румынская тяга, армейский жим, выпады.</span>,  
-      ],  
-    },  
-    mesomorph: {  
-      title: 'Рекомендуемая программа для мезоморфа (вес 65-85 кг)',  
-      description: [  
-        <span><strong>Понедельник:</strong> Приседания, жим лежа, тяга штанги в наклоне.</span>,  
-        <span><strong>Среда:</strong>Становая тяга, подтягивания, жим на наклонной скамье.</span>,  
-        <span><strong>Пятница:</strong>Выпады, армейский жим, гиперэкстензии.</span>,  
-      ],  
-    },  
-    endomorph: {  
-      title: 'Рекомендуемая программа для эндоморфа (вес > 85 кг)',  
-      description: [  
-        <span><strong>Понедельник:</strong> Приседания, жим лежа, тяга блока к груди.</span>,  
-        <span><strong>Среда:</strong> Становая тяга, жим на наклонной скамье, тяга гантелей в наклоне.</span>,  
-        <span><strong>Пятница:</strong> Кардио (30 минут), армейский жим, гиперэкстензии.</span>,  
-      ],  
-    },  
-  };  
+  const program = gainPrograms[bodyType]; // Получаем данные для текущего типа телосложения  
 
   return (  
     <div className="p-4 bg-gray-100 min-h-screen">  
@@ -44,56 +20,100 @@ function MassGainProgram() {
           Выберите тип телосложения:  
         </label>  
         <div className="flex flex-col sm:flex-row justify-center gap-4 px-4">  
-  {/* Эктоморф */}  
-  <button  
-    onClick={() => setBodyType('ectomorph')}  
-    className={`flex items-center mr-3 px-4 py-2 rounded-lg border ${  
-      bodyType === 'ectomorph'  
-        ? 'bg-blue-600 text-black border-blue-600'  
-        : 'bg-white text-gray-700 border-gray-300'  
-    } hover:bg-blue-500 hover:text-black transition-all duration-300 w-full sm:w-auto`}  
-  >  
-    <FaRunning className="text-xl" />  
-    <span>Эктоморф</span>  
-  </button>  
+          {/* Эктоморф */}  
+          <button  
+            onClick={() => setBodyType("ectomorph")}  
+            className={`flex items-center px-4 py-2 rounded-lg border ${  
+              bodyType === "ectomorph"  
+                ? "bg-blue-600 text-black border-blue-600"  
+                : "bg-white text-gray-700 border-gray-300"  
+            } hover:bg-blue-500 hover:text-black transition-all duration-300 w-full sm:w-auto`}  
+          >  
+            <FaRunning className="text-xl mr-2" />  
+            <span>Эктоморф</span>  
+          </button>  
 
-  {/* Мезоморф */}  
-  <button  
-    onClick={() => setBodyType('mesomorph')}  
-    className={`flex items-center mr-3 text-center px-4 py-2 rounded-lg border ${  
-      bodyType === 'mesomorph'  
-        ? 'bg-blue-600 text-black border-blue-600'  
-        : 'bg-white text-gray-700 border-gray-300'  
-    } hover:bg-blue-500 hover:text-white transition-all duration-300 w-full sm:w-auto`}  
-  >  
-    <FaDumbbell className="text-xl mr-3" />  
-    <span>Мезоморф</span>  
-  </button>  
+          {/* Мезоморф */}  
+          <button  
+            onClick={() => setBodyType("mesomorph")}  
+            className={`flex items-center px-4 py-2 rounded-lg border ${  
+              bodyType === "mesomorph"  
+                ? "bg-blue-600 text-black border-blue-600"  
+                : "bg-white text-gray-700 border-gray-300"  
+            } hover:bg-blue-500 hover:text-black transition-all duration-300 w-full sm:w-auto`}  
+          >  
+            <FaDumbbell className="text-xl mr-2" />  
+            <span>Мезоморф</span>  
+          </button>  
 
-  {/* Эндоморф */}  
-  <button  
-    onClick={() => setBodyType('endomorph')}  
-    className={`flex items-center space-x-3 px-4 py-2 rounded-lg border ${  
-      bodyType === 'endomorph'  
-        ? 'bg-blue-600 text-black border-blue-600'  
-        : 'bg-white text-gray-700 border-gray-300'  
-    } hover:bg-blue-500 hover:text-white transition-all duration-300 w-full sm:w-auto`}  
-  >  
-    <FaWeight className="text-xl" />  
-    <span>Эндоморф</span>  
-  </button>  
-</div> 
+          {/* Эндоморф */}  
+          <button  
+            onClick={() => setBodyType("endomorph")}  
+            className={`flex items-center px-4 py-2 rounded-lg border ${  
+              bodyType === "endomorph"  
+                ? "bg-blue-600 text-black border-blue-600"  
+                : "bg-white text-gray-700 border-gray-300"  
+            } hover:bg-blue-500 hover:text-black transition-all duration-300 w-full sm:w-auto`}  
+          >  
+            <FaWeight className="text-xl mr-2" />  
+            <span>Эндоморф</span>  
+          </button>  
+        </div>  
       </div>  
 
       {/* Отображение программы тренировок */}  
       <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-6">  
         <h2 className="text-xl font-bold text-gray-800 mb-4 text-center">  
-          {programs[bodyType].title}  
+          {program.title}  
         </h2>  
-        <ul className="list-disc pl-5 space-y-2 text-center">  
-          {programs[bodyType].description.map((item, index) => (  
-            <li key={index} className="text-gray-700 text-lg">  
-              {item}  
+        <p className="text-base sm:text-sm leading-relaxed text-justify mb-4">  
+          {program.description}  
+        </p>  
+
+        {/* Рацион питания */}  
+        <h3 className="text-lg font-bold text-gray-800 mb-2">Рацион питания:</h3>  
+        <ul className="list-disc pl-5 space-y-2">  
+          {program.nutrition.map((item, index) => (  
+            <li key={index} className="text-gray-700 text-base">{item}</li>  
+          ))}  
+        </ul>  
+
+        {/* Рекомендуемые анализы */}  
+        <h3 className="text-lg font-bold text-gray-800 mb-2 mt-4">Рекомендуемые анализы:</h3>  
+        <ul className="list-disc pl-5 space-y-2">  
+          {program.healthCheck.map((item, index) => (  
+            <li key={index} className="text-gray-700 text-base">{item}</li>  
+          ))}  
+        </ul>  
+
+        {/* Программа тренировок */}  
+        <h3 className="text-lg font-bold text-gray-800 mb-2 mt-4">Программа тренировок:</h3>  
+        <div className="space-y-4">  
+          {program.workout.map((day, index) => (  
+            <div key={index}>  
+              <h4 className="font-semibold text-gray-800">{day.day}:</h4>  
+              <ul className="list-disc pl-5 space-y-1">  
+                {day.exercises.map((exercise, i) => (  
+                  <li key={i} className="text-gray-700 text-base">{exercise}</li>  
+                ))}  
+              </ul>  
+            </div>  
+          ))}  
+        </div>  
+
+        {/* Полезные ресурсы */}  
+        <h3 className="text-lg font-bold text-gray-800 mb-2 mt-4">Полезные ресурсы:</h3>  
+        <ul className="list-disc pl-5 space-y-2">  
+          {program.resources.map((resource, index) => (  
+            <li key={index} className="text-gray-700 text-base">  
+              <a  
+                href={resource.link}  
+                target="_blank"  
+                rel="noopener noreferrer"  
+                className="text-blue-500 underline"  
+              >  
+                {resource.name}  
+              </a>  
             </li>  
           ))}  
         </ul>  
